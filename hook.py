@@ -24,6 +24,7 @@ import time
 
 import dns.resolver
 import dns.exception
+from tld import get_tld
 
 
 # Configure some basic logging
@@ -62,8 +63,9 @@ def _has_dns_propagated(name, token):
 
     # Retrieve all available TXT records that match our query
     try:
+        print(name)
         dns_response = resolver.query(name, 'txt')
-    except dns.resolver.NoAnswer:
+    except dns.exception.DNSException as error:
         return False
 
     # Loop through the TXT records to find one that matches our challenge
@@ -85,7 +87,8 @@ def get_domain(domain_name):
     Keyword arguments:
     domain_name -- the domain name that needs a challenge record
     """
-    domain = rax_dns.find(name=domain_name)
+    base_domain_name = get_tld("http://{0}".format(domain_name))
+    domain = rax_dns.find(name=base_domain_name)
     return domain
 
 
@@ -127,10 +130,11 @@ def delete_txt_record(args):
     args -- passed from letsencrypt.sh
     """
     domain_name = args[0]
-    domain = get_domain(domain_name)
+    base_domain_name = get_tld("http://{0}".format(domain_name))
+    domain = get_domain(base_domain_name)
 
     # Get the DNS record object(s) for our challenge record(s)
-    name = "{0}.{1}".format('_acme-challenge', domain)
+    name = "{0}.{1}".format('_acme-challenge', domain_name)
     dns_records = list(rax_dns.get_record_iterator(domain))
     text_records = [x for x in dns_records if x.type == 'TXT']
 
