@@ -39,7 +39,7 @@ try:
     rax_dns = pyrax.cloud_dns
 except KeyError:
     logger.error(" + Missing pyrax credentials file (export PYRAX_CREDS)")
-    sys.exit()
+    sys.exit(1)
 
 # Determine the IP addresses for Rackspace's public nameservers. We will query
 # these servers later to determine when our challenge record is published.
