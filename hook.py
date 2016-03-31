@@ -63,7 +63,6 @@ def _has_dns_propagated(name, token):
 
     # Retrieve all available TXT records that match our query
     try:
-        print(name)
         dns_response = resolver.query(name, 'txt')
     except dns.exception.DNSException as error:
         return False
