@@ -180,6 +180,7 @@ def main(argv):
         'deploy_challenge': create_txt_record,
         'clean_challenge': delete_txt_record,
         'deploy_cert': deploy_cert,
+        'unchanged_cert': unchanged_cert,
     }
     logger.info(" + Rackspace hook executing: {0}".format(argv[0]))
     ops[argv[0]](argv[1:])
