@@ -58,25 +58,31 @@ def _has_dns_propagated(name, token):
     name -- domain name that needs a challenge record
     token -- the challenge text that LetsEncrypt expects to find in DNS
     """
-    # We want to query Rackspace's DNS servers directly
-    resolver.nameservers = rackspace_dns_servers
 
-    # Retrieve all available TXT records that match our query
-    try:
-        dns_response = resolver.query(name, 'txt')
-    except dns.exception.DNSException as error:
-        return False
+    successes = 0
 
-    # Loop through the TXT records to find one that matches our challenge
-    text_records = [record.strings[0] for record in dns_response]
-    for text_record in text_records:
-        if text_record == token:
-            logger.info(" + Challenge record found!")
-            return True
-        else:
+    for dns_server in rackspace_dns_servers:
+        # We want to query Rackspace's DNS servers directly
+        resolver.nameservers = [dns_server]
+
+        # Retrieve all available TXT records that match our query
+        try:
+            dns_response = resolver.query(name, 'txt')
+        except dns.exception.DNSException as error:
             return False
 
-    return False
+        # Loop through the TXT records to find one that matches our challenge
+        text_records = [record.strings[0] for record in dns_response]
+        for text_record in text_records:
+            if text_record == token:
+                successes += 1
+
+    # We need a successful check from BOTH DNS servers to move forward
+    if successes == 2:
+        logger.info(" + Challenge record found!")
+        return True
+    else:
+        return False
 
 
 def get_domain(domain_name):
