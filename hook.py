@@ -161,6 +161,13 @@ def deploy_cert(args):
     return
 
 
+def unchanged_cert(args):
+    """
+    Display a message that the certificate is unchanged.
+    """
+    logger.info(' + Certificate is up to date. No changes are needed.')
+
+
 def main(argv):
     """
     The main logic of the hook.
