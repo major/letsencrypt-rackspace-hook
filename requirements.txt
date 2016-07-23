@@ -1,3 +1,10 @@
 dnspython
 tld
 pyrax
+monotonic
+debtcollector
+pytz
+positional
+oslo.config
+keystoneauth1
+netifaces
