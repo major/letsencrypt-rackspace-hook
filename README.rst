@@ -22,8 +22,8 @@ Start by cloning all of the files from GitHub:
 
 .. code-block:: console
 
-    $ git clone https://github.com/lukas2511/letsencrypt.sh.git
-    $ cd letsencrypt.sh
+    $ git clone https://github.com/lukas2511/dehydrated
+    $ cd dehydrated
     $ git clone https://github.com/major/letsencrypt-rackspace-hook.git hooks/rackspace
 
 Install the python dependencies:
@@ -71,7 +71,7 @@ script, specify our hook, and request a DNS challenge:
 
 .. code-block:: console
 
-    $ ./letsencrypt.sh --challenge dns-01 --cron --hook 'hooks/rackspace/hook.py'
+    $ ./dehydrated --challenge dns-01 --cron --hook 'hooks/rackspace/hook.py'
     # INFO: Using main config file /home/major/git/letsencrypt.sh/config.sh
     Processing example.com
      + Signing domains...
