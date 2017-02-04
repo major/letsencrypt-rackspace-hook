@@ -187,6 +187,7 @@ def main(argv):
         'clean_challenge': delete_txt_record,
         'deploy_cert': deploy_cert,
         'unchanged_cert': unchanged_cert,
+        'exit_hook': lambda *args: logger.info("Exiting"),
     }
     logger.info(" + Rackspace hook executing: {0}".format(argv[0]))
     ops[argv[0]](argv[1:])
