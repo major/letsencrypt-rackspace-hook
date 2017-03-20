@@ -2,7 +2,8 @@ Rackspace DNS hook for letsencrypt.sh
 =====================================
 
 This repository contains a hook for the `letsencrypt.sh`_ project that allows a
-user to obtain a certificate from the `Let's Encrypt`_ API via a DNS challenge.
+user to obtain a certificate from the `Let's Encrypt`_ API via a DNS challenge
+using the `dehydrated`_ client.
 The hook will automatically create DNS records via the `Rackspace DNS API`_ and
 remove those records when the challenge process is complete.
 
@@ -11,6 +12,7 @@ Have more questions?  Skip down to the FAQ section below.
 .. _letsencrypt.sh: https://github.com/lukas2511/letsencrypt.sh
 .. _Let's Encrypt: https://letsencrypt.org/
 .. _Rackspace DNS API: https://www.rackspace.com/en-us/cloud/dns
+.. _dehydrated: https://github.com/lukas2511/dehydrated
 
 Usage
 -----
@@ -35,8 +37,8 @@ Install the python dependencies:
 Configuration
 ~~~~~~~~~~~~~
 
-You will need some basic configuration to get started.  First, create a
-``config.sh`` in the base of the letsencrypt.sh repository directory:
+First, you will need to configure the client by creating a ``config`` 
+file in the base of the letsencrypt.sh repository directory with the following:
 
 .. code-block:: shell
 
@@ -53,7 +55,7 @@ Now, we export the path to our pyrax credentials file as ``PYRAX_CREDS``:
 Not familiar with `pyrax`_?  Refer to the `documentation on authentication`_ to
 set up a pyrax configuration file with credentials.
 
-Specify the domain you want to secure with an SSL certificate by creating a ``domains.txt`` in the same directory as ``config.sh``:
+Specify the domain you want to secure with an SSL certificate by creating a ``domains.txt`` in the same directory as ``config``:
 
 .. code-block:: console
 
@@ -71,8 +73,8 @@ script, specify our hook, and request a DNS challenge:
 
 .. code-block:: console
 
-    $ ./letsencrypt.sh --challenge dns-01 --cron --hook 'hooks/rackspace/hook.py'
-    # INFO: Using main config file /home/major/git/letsencrypt.sh/config.sh
+    $ ./dehydrated --challenge dns-01 --cron --hook 'hooks/rackspace/hook.py'
+    # INFO: Using main config file /home/major/git/letsencrypt.sh/config
     Processing example.com
      + Signing domains...
      + Generating private key...
