@@ -74,7 +74,7 @@ script, specify our hook, and request a DNS challenge:
 .. code-block:: console
 
     $ ./dehydrated --challenge dns-01 --cron --hook 'hooks/rackspace/hook.py'
-    # INFO: Using main config file /home/major/git/letsencrypt.sh/config.sh
+    # INFO: Using main config file /home/major/git/letsencrypt.sh/config
     Processing example.com
      + Signing domains...
      + Generating private key...
